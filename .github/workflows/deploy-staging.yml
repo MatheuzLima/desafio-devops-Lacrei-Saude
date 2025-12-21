@@ -28,7 +28,7 @@ jobs:
       - name: Build e Push da Imagem Docker
         uses: docker/build-push-action@v5
         with:
-          context: ./src
+          context: ./app
           push: true
           tags: ghcr.io/matheuzlima/desafio-lacrei-app:latest
 
