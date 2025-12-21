@@ -95,6 +95,7 @@ resource "aws_instance" "staging_server" {
   key_name               = "lacrei-devops-key"
   vpc_security_group_ids = [aws_security_group.lacrei_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
+  user_data = file("ec2-setup.sh")
 
   tags = {
     Name = "lacrei-staging-server"
@@ -108,6 +109,7 @@ resource "aws_instance" "production_server" {
   key_name               = "lacrei-devops-key"
   vpc_security_group_ids = [aws_security_group.lacrei_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
+  user_data = file("ec2-setup.sh")
 
   tags = {
     Name = "lacrei-production-server"
