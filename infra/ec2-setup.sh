@@ -22,12 +22,12 @@ dnf install -y nginx
 rm -f /etc/nginx/conf.d/default.conf
 
 # Criar a configuração de Proxy Reverso
-# Isso redireciona a porta 80 (Internet) para a 3000 (Seu Container)
+# Isso redireciona a porta 80 (Internet) para a 3000 (Container)
 cat <<EOF > /etc/nginx/conf.d/app.conf
 server {
     listen 80;
     listen [::]:80;
-    server_name _; # Aceita qualquer domínio, alterar quando estiver definido o domínio
+    server_name https://desafio-lacrei.sparkflux.com.br; # Aceita qualquer domínio, alterar quando estiver definido o domínio
 
     location / {
         proxy_pass http://127.0.0.1:3000; # Redireciona para o Docker
