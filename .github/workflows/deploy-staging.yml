@@ -52,8 +52,6 @@ jobs:
             # 4. Subir o novo container
             docker run -d \
               -p 3000:3000 \
-              -p 443:8443 \
-              -v /etc/letsencrypt:/etc/letsencrypt:ro \
               -e DOMAIN_NAME=desafio-lacrei.sparkflux.com.br \
               --restart unless-stopped \
               --log-driver=awslogs \

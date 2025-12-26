@@ -27,7 +27,7 @@ cat <<EOF > /etc/nginx/conf.d/app.conf
 server {
     listen 80;
     listen [::]:80;
-    server_name https://desafio-lacrei.sparkflux.com.br; # Aceita qualquer domínio, alterar quando estiver definido o domínio
+    server_name desafio-lacrei.sparkflux.com.br;
 
     location / {
         proxy_pass http://127.0.0.1:3000; # Redireciona para o Docker
