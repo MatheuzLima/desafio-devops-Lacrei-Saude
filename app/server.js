@@ -1,51 +1,34 @@
-// const express = require('express');
-// const app = express();
-// const PORT = process.env.PORT || 3000;
-
-// app.get('/status', (req, res) => {
-//   res.status(200).json({ 
-//     status: "ok", 
-//     message: "Desafio DevOps Lacrei Saúde ativo e rodando na AWS EC2!",
-//     timestamp: new Date().toISOString(),});
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`✅ Servidor rodando na porta ${PORT}`);
-// });
-
 const express = require('express');
-const https = require('https');
-const http = require('http');
-const fs = require('fs');
-
-// Lê o nome do domínio da variável de ambiente
-const DOMAIN = process.env.DOMAIN_NAME || 'localhost';          
 const app = express();
 
+// Lê as variáveis de ambiente (Definida no Pipeline)
+// Se não houver variável, usa valores padrão seguros
+const PORT = process.env.PORT || 3000;
+const DOMAIN = process.env.DOMAIN_NAME || 'localhost';
+
+// Rota de Status (Usada pelo seu Smoke Test da Pipeline)
 app.get('/status', (req, res) => {
-  res.status(200).json({ message: `Aplicação rodando em HTTPS no domínio: ${DOMAIN}` });
+  res.status(200).json({ 
+    status: 'ok',
+    message: `Aplicação rodando atrás do Nginx!`,
+    domain: DOMAIN,
+    environment: process.env.NODE_ENV || 'development'
+  });
 });
 
-// Verifica se a variável de ambiente do domínio foi definida
-if (!DOMAIN) {
-  console.error("ERRO: A variável de ambiente DOMAIN_NAME não está definida.");
-  process.exit(1); // Encerra a aplicação se o domínio não for fornecido
-}
-
-const sslOptions = {
-  key: fs.readFileSync(`/etc/letsencrypt/live/${DOMAIN}/privkey.pem`),
-  cert: fs.readFileSync(`/etc/letsencrypt/live/${DOMAIN}/fullchain.pem`)
-};
-
-const httpsServer = https.createServer(sslOptions, app);
-httpsServer.listen(8443, () => {
-  console.log(`Servidor HTTPS rodando na porta 8443 para o domínio ${DOMAIN}`);
+// Rota Principal (Para não dar erro 404 na home)
+app.get('/', (req, res) => {
+  res.send(`<h1>Desafio Lacrei Saúde</h1><p>Servidor respondendo corretamente para: <strong>${DOMAIN}</strong></p>`);
 });
 
-const httpServer = http.createServer((req, res) => {
-  res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-  res.end();
+// Inicia o servidor apenas em HTTP (O Nginx cuida da segurança lá na frente)
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor iniciado na porta ${PORT}`);
+  console.log(`📡 Esperando conexões vindas do Nginx...`);
 });
-httpServer.listen(3000, () => {
-  console.log('Servidor HTTP (redirecionamento) rodando na porta 3000');
+
+// (Opcional) Tratamento para desligamento gracioso pelo Docker
+process.on('SIGTERM', () => {
+  console.log('SIGTERM recebido. Encerrando servidor...');
+  process.exit(0);
 });
