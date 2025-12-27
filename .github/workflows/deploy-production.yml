@@ -55,7 +55,7 @@ jobs:
             echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
             # Puxar a versão específica da tag atual
-            docker pull ghcr.io/matheuzlima/desafio-lacrei-app:${{ github.ref_name }}
+            docker pull ghcr.io/matheuzlima/desafio-devops-Lacrei-Saude:${{ github.ref_name }}
             
             # Limpeza
             docker stop lacrei-container || true
@@ -72,7 +72,7 @@ jobs:
               -e NODE_ENV=production \
               -e DOMAIN_NAME=lacrei-production.sparkflux.com.br \
               --name lacrei-container \
-              ghcr.io/matheuzlima/desafio-lacrei-app:${{ github.ref_name }}
+              ghcr.io/matheuzlima/desafio-devops-Lacrei-Saude:${{ github.ref_name }}
 
       - name: Validar Deploy de Produção (Smoke Test)
         run: |
