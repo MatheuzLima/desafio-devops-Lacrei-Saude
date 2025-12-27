@@ -52,7 +52,7 @@ jobs:
             # 4. Subir o novo container
             docker run -d \
               -p 3000:3000 \
-              -e DOMAIN_NAME=lacrei-staging.duckdns.org \
+              -e DOMAIN_NAME=lacrei-staging.sparkflux.com.br \
               --restart unless-stopped \
               --log-driver=awslogs \
               --log-opt awslogs-region=us-east-1 \
@@ -64,4 +64,4 @@ jobs:
       - name: Validar Deploy de Staging (Smoke Test)
         run: |
           sleep 20 #tempo para testar o link
-          curl -f --retry 3 --retry-delay 4 https://lacrei-staging.duckdns.org/status
+          curl -f --retry 3 --retry-delay 4 https://lacrei-staging.sparkflux.com.br/status
