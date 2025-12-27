@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 # 1. Atualizar o sistema
 dnf update -y
 
@@ -27,7 +28,7 @@ cat <<EOF > /etc/nginx/conf.d/app.conf
 server {
     listen 80;
     listen [::]:80;
-    server_name desafio-lacrei.sparkflux.com.br;
+    server_name lacrei-staging.duckdns.org;
 
     location / {
         proxy_pass http://127.0.0.1:3000; # Redireciona para o Docker
