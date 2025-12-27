@@ -16,11 +16,6 @@ app.get('/status', (req, res) => {
   });
 });
 
-// Rota Principal (Para não dar erro 404 na home)
-app.get('/', (req, res) => {
-  res.send(`<h1>Desafio Lacrei Saúde</h1><p>Servidor respondendo corretamente para: <strong>${DOMAIN}</strong></p>`);
-});
-
 // Inicia o servidor apenas em HTTP (O Nginx cuida da segurança lá na frente)
 app.listen(PORT, () => {
   console.log(`🚀 Servidor iniciado na porta ${PORT}`);
