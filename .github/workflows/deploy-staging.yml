@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths-ignore:
       - '**.md'           # Não roda arquivos Markdown
-      - '.github/**'      # Não roda se você só mexeu na pipeline
+      - '.github/**'      # Não roda pipeline
 
 jobs:
   build-deploy:
