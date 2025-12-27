@@ -18,8 +18,8 @@ const https = require('https');
 const http = require('http');
 const fs = require('fs');
 
-// Lê o nome do domínio da variável de ambiente   process.env.DOMAIN_NAME;
-const DOMAIN = lacrei-staging.sparkflux.com.br;           
+// Lê o nome do domínio da variável de ambiente
+const DOMAIN = process.env.DOMAIN_NAME || 'localhost';          
 const app = express();
 
 app.get('/status', (req, res) => {
