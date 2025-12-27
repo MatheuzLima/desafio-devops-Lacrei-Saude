@@ -70,11 +70,11 @@ jobs:
               --log-opt awslogs-group=lacrei-prod-logs \
               --log-opt awslogs-create-group=true \
               -e NODE_ENV=production \
-              -e DOMAIN_NAME=desafio-lacrei.sparkflux.com.br \
+              -e DOMAIN_NAME=lacrei-production.sparkflux.com.br \
               --name lacrei-container \
               ghcr.io/matheuslimams/desafio-lacrei-app:${{ github.ref_name }}
 
       - name: Validar Deploy de Produção (Smoke Test)
         run: |
           sleep 10
-          curl -f --retry 5 --retry-delay 5 https://desafio-lacrei.sparkflux.com.br/status
+          curl -f --retry 3 --retry-delay 3 https://lacrei-production.sparkflux.com.br/status
