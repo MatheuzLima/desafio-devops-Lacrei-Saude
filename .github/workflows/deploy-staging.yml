@@ -3,6 +3,9 @@ name: Deploy em Staging
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**.md'           # Não roda arquivos Markdown
+      - '.github/**'      # Não roda se você só mexeu na pipeline
 
 jobs:
   build-deploy:
